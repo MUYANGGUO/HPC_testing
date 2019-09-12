@@ -1,0 +1,53 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+
+Begin optimization report for: verlet_step(int, int, real_t, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (verlet_step(int, int, real_t, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__, real_t *__restrict__)) [1] verlet.c(14,1)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at verlet.c(17,3)
+<Peeled loop for vectorization>
+LOOP END
+
+LOOP BEGIN at verlet.c(17,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25451: Advice: Loop Interchange, if possible, might help loopnest. Suggested Permutation : ( 1 2 ) --> ( 2 1 ) 
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15448: unmasked aligned unit stride loads: 1 
+   remark #15449: unmasked aligned unit stride stores: 1 
+   remark #15450: unmasked unaligned unit stride loads: 5 
+   remark #15451: unmasked unaligned unit stride stores: 5 
+   remark #15475: --- begin vector loop cost summary ---
+   remark #15476: scalar loop cost: 358 
+   remark #15477: vector loop cost: 174.500 
+   remark #15478: estimated potential speedup: 2.030 
+   remark #15488: --- end vector loop cost summary ---
+
+   LOOP BEGIN at verlet.c(25,5)
+      remark #25436: completely unrolled by 2   (pre-vector) 
+   LOOP END
+LOOP END
+
+LOOP BEGIN at verlet.c(17,3)
+<Remainder loop for vectorization>
+LOOP END
+===========================================================================
