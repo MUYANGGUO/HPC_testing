@@ -1,0 +1,11 @@
+[19208, 25]: -- begin new backtrace (innermost first) [PARTIAL] ----------
+[19208, 25]: NULL (0): ip = 0x2aaaaaffc7af (0x7e7af), load module = /nv/usr-local-rhel6.7/pacerepov1/intel/compiler/16.0/compilers_and_libraries_2016.0.109/linux/compiler/lib/intel64_lin/libiomp5.so | lip 
+[19208, 25]: NULL (0): ip = 0x401923 (0x401923), load module = /nv/coc-ice/zjiang333/cse6230-hw/4-interacting-particles/cloud | lip 
+[19208, 25]: -- end backtrace ------------------------------------
+
+MEMORY: segment size: 4.0 meg, num segments: 29, total allocation: 116.0 meg, reclaims: 0
+MEMORY: total freeable: 0.0 meg, total non-freeable: 3.5 meg, malloc failures: 0
+SAMPLE ANOMALIES: blocks: 0 (async: 0, dlopen: 0), errors: 1 (segv: 0, soft: 1)
+SUMMARY: samples: 1914 (recorded: 1914, blocked: 0, errant: 1, trolled: 0, yielded: 0),
+         frames: 10676 (trolled: 0)
+         intervals: 643 (suspicious: 0)

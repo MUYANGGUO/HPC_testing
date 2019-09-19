@@ -1,0 +1,49 @@
+To connect to your notebook, run the following command on your laptop/workstation:
+
+ssh -t -L 9872:localhost:9872 zjiang333@coc-ice.pace.gatech.edu ssh -L 9872:localhost:9872 rich133-h35-18-l
+
+Do not close the terminal where that is running, and open the address below in your browser:
+
+[I 01:10:31.211 NotebookApp] Serving notebooks from local directory: /nv/coc-ice/zjiang333/cse6230-hw/4-interacting-particles
+[I 01:10:31.211 NotebookApp] The Jupyter Notebook is running at:
+[I 01:10:31.211 NotebookApp] http://localhost:9872/?token=8ca4dad0bbafbb355092adcaa2b18589fba1dc88475a48b5
+[I 01:10:31.211 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 01:10:31.212 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:9872/?token=8ca4dad0bbafbb355092adcaa2b18589fba1dc88475a48b5
+[I 01:11:12.776 NotebookApp] 302 GET /?token=8ca4dad0bbafbb355092adcaa2b18589fba1dc88475a48b5 (127.0.0.1) 0.66ms
+[W 01:11:16.244 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20190919011029 (127.0.0.1) 12.46ms referer=http://localhost:9872/notebooks/noisy-and-repellant.ipynb
+[I 01:11:18.230 NotebookApp] Kernel started: 466c60a4-1019-4b47-a929-ddc7c1a97207
+[I 01:11:19.890 NotebookApp] Adapting to protocol v5.1 for kernel 466c60a4-1019-4b47-a929-ddc7c1a97207
+[I 01:11:21.612 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:13:19.214 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:15:06.716 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:21:19.214 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:23:19.222 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:25:19.254 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:41:19.266 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:43:19.253 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:45:19.267 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:47:19.253 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:53:19.307 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 01:55:19.286 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:01:19.297 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:03:19.301 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:05:19.290 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:07:19.376 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:09:19.315 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:11:19.315 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:13:19.301 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:15:19.312 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:17:19.329 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:19:19.324 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:21:19.369 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:29:19.375 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:31:19.338 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:37:20.251 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:45:14.076 NotebookApp] Uploading file to /Picture1.png
+[I 02:47:01.244 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:47:02.982 NotebookApp] Saving file at /noisy-and-repellant.ipynb
+[I 02:47:16.239 NotebookApp] Starting buffering for 466c60a4-1019-4b47-a929-ddc7c1a97207:b8f3f2fcf4c04c4a87564aca0c70c939

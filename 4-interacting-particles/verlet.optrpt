@@ -1,0 +1,54 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: verlet_step(int, int, double, double, double, cse6230rand_t *, double *__restrict__ *, double *__restrict__ *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (verlet_step(int, int, double, double, double, cse6230rand_t *, double *__restrict__ *, double *__restrict__ *)) [1/1=100.0%] verlet.c(10,1)
+  -> EXTERN: (18,5) verlet_step_stream_and_noise(int, double, double, cse6230rand_t *, double *__restrict__ *, const double *__restrict__ *)
+  -> EXTERN: (21,20) verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)
+  -> EXTERN: (22,5) verlet_step_stream_and_noise(int, double, double, cse6230rand_t *, double *__restrict__ *, const double *__restrict__ *)
+  -> EXTERN: (25,20) verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)
+  -> EXTERN: (26,5) verlet_step_stream_and_noise(int, double, double, cse6230rand_t *, double *__restrict__ *, const double *__restrict__ *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at verlet.c(20,3)
+   remark #15382: vectorization support: call to function verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *) cannot be vectorized   [ verlet.c(21,20) ]
+   remark #15382: vectorization support: call to function verlet_step_stream_and_noise(int, double, double, cse6230rand_t *, double *__restrict__ *, const double *__restrict__ *) cannot be vectorized   [ verlet.c(22,5) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+LOOP END
+
+LOOP BEGIN at verlet.c(24,3)
+   remark #15382: vectorization support: call to function verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *) cannot be vectorized   [ verlet.c(25,20) ]
+   remark #15382: vectorization support: call to function verlet_step_stream_and_noise(int, double, double, cse6230rand_t *, double *__restrict__ *, const double *__restrict__ *) cannot be vectorized   [ verlet.c(26,5) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+LOOP END
+===========================================================================

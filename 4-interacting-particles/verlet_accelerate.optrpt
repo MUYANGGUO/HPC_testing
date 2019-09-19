@@ -1,0 +1,93 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: force(double, double, double, double, double, double, double, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (force(double, double, double, double, double, double, double, double *)) cloud.h(48,1)
+
+===========================================================================
+
+Begin optimization report for: verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)) [2/2=100.0%] verlet_accelerate.c(7,1)
+  -> EXTERN: (11,17) ?1memset
+  -> INLINE (MANUAL): (18,9) force(double, double, double, double, double, double, double, double *) (isz = 64) (sz = 83)
+    -> EXTERN: cloud.h:(53,8) remainder(double, double)
+    -> EXTERN: cloud.h:(54,8) remainder(double, double)
+    -> EXTERN: cloud.h:(55,8) remainder(double, double)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+verlet_accelerate.c(13:1-13:1):OMP:verlet_step_accelerate:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at verlet_accelerate.c(10,3)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form
+
+   LOOP BEGIN at verlet_accelerate.c(26,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed FLOW dependence between U line 27 and U line 27
+      remark #15346: vector dependence: assumed ANTI dependence between U line 27 and U line 27
+      remark #25436: completely unrolled by 3  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at verlet_accelerate.c(14,5)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed FLOW dependence between du line 64 and du line 22
+   remark #15346: vector dependence: assumed ANTI dependence between du line 22 and du line 64
+
+   LOOP BEGIN at verlet_accelerate.c(21,9)
+      remark #15389: vectorization support: reference u has unaligned access   [ verlet_accelerate.c(22,11) ]
+      remark #15389: vectorization support: reference u has unaligned access   [ verlet_accelerate.c(22,11) ]
+      remark #15388: vectorization support: reference du has aligned access   [ verlet_accelerate.c(22,11) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.750
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15451: unmasked unaligned unit stride stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 6 
+      remark #15477: vector loop cost: 4.000 
+      remark #15478: estimated potential speedup: 0.900 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25436: completely unrolled by 3  
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+verlet_accelerate.c(11,17):remark #34000: call to memset implemented inline with stores with proven (alignment, offset): (32, 0)
+===========================================================================

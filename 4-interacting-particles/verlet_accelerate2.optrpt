@@ -1,0 +1,69 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: force(double, double, double, double, double, double, double, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (force(double, double, double, double, double, double, double, double *)) cloud.h(48,1)
+
+===========================================================================
+
+Begin optimization report for: verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (verlet_step_accelerate(int, double, const double *__restrict__ *, double *__restrict__ *)) [2/2=100.0%] verlet_accelerate2.c(7,1)
+  -> INLINE (MANUAL): (15,7) force(double, double, double, double, double, double, double, double *) (isz = 64) (sz = 83)
+    -> EXTERN: cloud.h:(53,8) remainder(double, double)
+    -> EXTERN: cloud.h:(54,8) remainder(double, double)
+    -> EXTERN: cloud.h:(55,8) remainder(double, double)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+verlet_accelerate2.c(11:1-11:1):OMP:verlet_step_accelerate:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at verlet_accelerate2.c(10,3)
+   remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form
+LOOP END
+
+LOOP BEGIN at verlet_accelerate2.c(12,5)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25451: Advice: Loop Interchange, if possible, might help loopnest. Suggested Permutation : ( 1 2 ) --> ( 2 1 ) 
+   remark #25456: Number of Array Refs Scalar Replaced In Loop: 6
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between U line 18 and U line 19
+   remark #15346: vector dependence: assumed OUTPUT dependence between U line 19 and U line 18
+
+   LOOP BEGIN at verlet_accelerate2.c(17,7)
+      remark #25436: completely unrolled by 3   (pre-vector) 
+   LOOP END
+LOOP END
+===========================================================================
