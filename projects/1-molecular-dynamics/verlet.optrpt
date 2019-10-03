@@ -1,0 +1,442 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: RotL_64(uint64_t, unsigned int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (RotL_64(uint64_t, unsigned int)) ../../utils/Random123/include/Random123/threefry.h(160,1)
+
+===========================================================================
+
+Begin optimization report for: threefry4x64_R(unsigned int, threefry4x64_ctr_t, threefry4x64_key_t)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (threefry4x64_R(unsigned int, threefry4x64_ctr_t, threefry4x64_key_t)) ../../utils/Random123/include/Random123/threefry.h(728,1)
+
+===========================================================================
+
+Begin optimization report for: cse6230rand_get_tag(cse6230rand_t *__restrict__)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (cse6230rand_get_tag(cse6230rand_t *__restrict__)) ../../utils/cse6230rand.h(59,1)
+
+===========================================================================
+
+Begin optimization report for: cse6230rand_normal_hash(cse6230rand_t *__restrict__, size_t, size_t, size_t, size_t, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (cse6230rand_normal_hash(cse6230rand_t *__restrict__, size_t, size_t, size_t, size_t, double *)) ../../utils/cse6230rand.h(95,1)
+
+===========================================================================
+
+Begin optimization report for: VerletCreate(Verlet *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VerletCreate(Verlet *)) [5/10=50.0%] verlet.c(14,1)
+  -> EXTERN: (18,9) safe_malloc(size_t, void *, const char *, const char *, int)
+
+===========================================================================
+
+Begin optimization report for: VerletSetNoise(Verlet, cse6230rand_t *, double)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VerletSetNoise(Verlet, cse6230rand_t *, double)) [6/10=60.0%] verlet.c(28,1)
+
+===========================================================================
+
+Begin optimization report for: VerletSetAccel(Verlet, Accel)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VerletSetAccel(Verlet, Accel)) [7/10=70.0%] verlet.c(36,1)
+
+===========================================================================
+
+Begin optimization report for: VerletDestroy(Verlet *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VerletDestroy(Verlet *)) [8/10=80.0%] verlet.c(43,1)
+  -> EXTERN: (44,3) free(void *)
+
+===========================================================================
+
+Begin optimization report for: stream_and_noise(Verlet, double, double, Vector, Vector)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (stream_and_noise(Verlet, double, double, Vector, Vector)) verlet.c(52,1)
+
+===========================================================================
+
+Begin optimization report for: verlet_step(Verlet, int, double, Vector, Vector)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (verlet_step(Verlet, int, double, Vector, Vector)) [10/10=100.0%] verlet.c(85,1)
+  -> EXTERN: (92,5) accelerate(Accel, Vector, Vector)
+  -> INLINE: (93,5) stream_and_noise(Verlet, double, double, Vector, Vector) (isz = 227) (sz = 240)
+    -> INLINE (MANUAL): (57,9) cse6230rand_get_tag(cse6230rand_t *__restrict__) (isz = 4) (sz = 11)
+    -> INLINE (MANUAL): (63,7) cse6230rand_normal_hash(cse6230rand_t *__restrict__, size_t, size_t, size_t, size_t, double *) (isz = 71) (sz = 86)
+      -> INLINE (MANUAL): ../../utils/cse6230rand.h:(106,7) threefry4x64_R(unsigned int, threefry4x64_ctr_t, threefry4x64_key_t) (isz = 842) (sz = 853)
+        -> EXTERN: ../../utils/Random123/include/Random123/threefry.h:(728,1) __assert_fail(const char *, const char *, unsigned int, const char *)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+        -> INLINE (MANUAL): ../../utils/Random123/include/Random123/threefry.h:(728,1) RotL_64(uint64_t, unsigned int) (isz = 5) (sz = 13)
+      -> EXTERN: ../../utils/cse6230rand.h:(110,28) log(double)
+      -> EXTERN: ../../utils/cse6230rand.h:(110,39) cos(double)
+      -> EXTERN: ../../utils/cse6230rand.h:(111,28) log(double)
+      -> EXTERN: ../../utils/cse6230rand.h:(111,39) sin(double)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+verlet.c(58:3-58:3):OMP:verlet_step:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at verlet.c(91,3)
+   remark #15382: vectorization support: call to function accelerate(Accel, Vector, Vector) cannot be vectorized   [ verlet.c(92,5) ]
+   remark #15382: vectorization support: call to function __kmpc_ok_to_fork cannot be vectorized   [ verlet.c(58,3) ]
+   remark #15382: vectorization support: call to function __kmpc_fork_call cannot be vectorized   [ verlet.c(58,3) ]
+   remark #15382: vectorization support: call to function __kmpc_serialized_parallel cannot be vectorized   [ verlet.c(58,3) ]
+   remark #15382: vectorization support: call to function . cannot be vectorized   [ verlet.c(58,3) ]
+   remark #15382: vectorization support: call to function __kmpc_end_serialized_parallel cannot be vectorized   [ verlet.c(58,3) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+LOOP END
+
+LOOP BEGIN at verlet.c(59,3) inlined into verlet.c(93,5)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at verlet.c(62,5) inlined into verlet.c(93,5)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+      remark #25456: Number of Array Refs Scalar Replaced In Loop: 1
+
+      LOOP BEGIN at ../../utils/cse6230rand.h(106,7) inlined into verlet.c(93,5)
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15301: MATERIALIZED LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 1 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 4 
+         remark #15477: vector loop cost: 0.750 
+         remark #15478: estimated potential speedup: 5.330 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/Random123/include/Random123/threefry.h(728,1) inlined into verlet.c(93,5)
+      <Distributed chunk1>
+         remark #25426: Loop Distributed (2 way) 
+         remark #15388: vectorization support: reference ks has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15309: vectorization support: normalized vectorization overhead 2.000
+         remark #15301: PARTIAL LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15449: unmasked aligned unit stride stores: 2 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 7 
+         remark #15477: vector loop cost: 1.500 
+         remark #15478: estimated potential speedup: 1.550 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/Random123/include/Random123/threefry.h(728,1) inlined into verlet.c(93,5)
+      <Distributed chunk2>
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between ks line 728 and ks line 728
+         remark #25436: completely unrolled by 4  
+      LOOP END
+
+      LOOP BEGIN at ../../utils/Random123/include/Random123/threefry.h(728,1) inlined into verlet.c(93,5)
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference ks has aligned access
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15309: vectorization support: normalized vectorization overhead 2.400
+         remark #15301: MATERIALIZED LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 6 
+         remark #15477: vector loop cost: 1.250 
+         remark #15478: estimated potential speedup: 1.410 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/Random123/include/Random123/threefry.h(728,1) inlined into verlet.c(93,5)
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15389: vectorization support: reference ks has unaligned access
+         remark #15381: vectorization support: unaligned access used inside loop body
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15309: vectorization support: normalized vectorization overhead 2.000
+         remark #15301: MATERIALIZED LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 1 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15450: unmasked unaligned unit stride loads: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 6 
+         remark #15477: vector loop cost: 1.500 
+         remark #15478: estimated potential speedup: 1.330 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/Random123/include/Random123/threefry.h(728,1) inlined into verlet.c(93,5)
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference ks has aligned access
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15309: vectorization support: normalized vectorization overhead 0.600
+         remark #15301: MATERIALIZED LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 6 
+         remark #15477: vector loop cost: 1.250 
+         remark #15478: estimated potential speedup: 3.000 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/cse6230rand.h(106,7) inlined into verlet.c(93,5)
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15388: vectorization support: reference v has aligned access
+         remark #15305: vectorization support: vector length 4
+         remark #15427: loop was completely unrolled
+         remark #15301: MATERIALIZED LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 1 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 4 
+         remark #15477: vector loop cost: 0.750 
+         remark #15478: estimated potential speedup: 5.330 
+         remark #15488: --- end vector loop cost summary ---
+      LOOP END
+
+      LOOP BEGIN at ../../utils/cse6230rand.h(107,3) inlined into verlet.c(93,5)
+         remark #15310: loop was not vectorized: operation cannot be vectorized   [ ../../utils/cse6230rand.h(110,61) ]
+         remark #25436: completely unrolled by 2  
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at verlet.c(74,7) inlined into verlet.c(93,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between X line 76 and X line 76
+      remark #15346: vector dependence: assumed OUTPUT dependence between X line 76 and X line 76
+      remark #25015: Estimate of max trip count of loop=3
+
+      LOOP BEGIN at verlet.c(75,9) inlined into verlet.c(93,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between X line 76 and U line 76
+         remark #15346: vector dependence: assumed ANTI dependence between U line 76 and X line 76
+         remark #25439: unrolled with remainder by 2  
+         remark #25015: Estimate of max trip count of loop=4
+      LOOP END
+
+      LOOP BEGIN at verlet.c(75,9) inlined into verlet.c(93,5)
+      <Remainder>
+         remark #25015: Estimate of max trip count of loop=4
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at verlet.c(67,7) inlined into verlet.c(93,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between X line 69 and X line 69
+      remark #15346: vector dependence: assumed OUTPUT dependence between X line 69 and X line 69
+      remark #25436: completely unrolled by 3  
+
+      LOOP BEGIN at verlet.c(68,9) inlined into verlet.c(93,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between X line 69 and U line 69
+         remark #15346: vector dependence: assumed ANTI dependence between U line 69 and X line 69
+         remark #25436: completely unrolled by 4  
+      LOOP END
+
+      LOOP BEGIN at verlet.c(68,9) inlined into verlet.c(93,5)
+      LOOP END
+
+      LOOP BEGIN at verlet.c(68,9) inlined into verlet.c(93,5)
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================

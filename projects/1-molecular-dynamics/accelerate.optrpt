@@ -1,0 +1,228 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: force_in_range(double, double, double, double, double, double, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (force_in_range(double, double, double, double, double, double, double *)) steric.h(25,1)
+
+===========================================================================
+
+Begin optimization report for: dist_and_disp(double, double, double, double, double, double, double, double *, double *, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (dist_and_disp(double, double, double, double, double, double, double, double *, double *, double *)) steric.h(42,1)
+
+===========================================================================
+
+Begin optimization report for: force(double, double, double, double, double, double, double, double, double, double *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (force(double, double, double, double, double, double, double, double, double, double *)) steric.h(58,1)
+
+===========================================================================
+
+Begin optimization report for: AccelCreate(int, double, double, double, int, Accel *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (AccelCreate(int, double, double, double, int, Accel *)) [4/8=50.0%] accelerate.c(19,1)
+  -> EXTERN: (23,9) safe_malloc(size_t, void *, const char *, const char *, int)
+  -> EXTERN: (32,11) IXCreate(double, int, int, IX *)
+
+===========================================================================
+
+Begin optimization report for: AccelDestroy(Accel *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (AccelDestroy(Accel *)) [5/8=62.5%] accelerate.c(43,1)
+  -> EXTERN: (47,11) IXDestroy(IX *)
+  -> EXTERN: (49,3) free(void *)
+
+===========================================================================
+
+Begin optimization report for: accelerate_ix(Accel, Vector, Vector)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (accelerate_ix(Accel, Vector, Vector)) accelerate.c(56,1)
+
+===========================================================================
+
+Begin optimization report for: accelerate_direct(Accel, Vector, Vector)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (accelerate_direct(Accel, Vector, Vector)) accelerate.c(95,1)
+
+===========================================================================
+
+Begin optimization report for: accelerate(Accel, Vector, Vector)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (accelerate(Accel, Vector, Vector)) [8/8=100.0%] accelerate.c(126,1)
+  -> INLINE: (128,5) accelerate_ix(Accel, Vector, Vector) (isz = 234) (sz = 243)
+    -> EXTERN: (72,3) IXGetPairs(IX, Vector, double, int *, ix_pair **)
+    -> INLINE (MANUAL): (80,5) force(double, double, double, double, double, double, double, double, double, double *) (isz = 62) (sz = 85)
+      -> INLINE (MANUAL): steric.h:(63,8) dist_and_disp(double, double, double, double, double, double, double, double *, double *, double *) (isz = 21) (sz = 46)
+        -> EXTERN: (44,14) remainder(double, double)
+        -> EXTERN: (45,14) remainder(double, double)
+        -> EXTERN: (46,14) remainder(double, double)
+      -> INLINE (MANUAL): steric.h:(72,5) force_in_range(double, double, double, double, double, double, double *) (isz = 10) (sz = 27)
+    -> EXTERN: (90,3) IXRestorePairs(IX, Vector, double, int *, ix_pair **)
+  -> INLINE: (131,5) accelerate_direct(Accel, Vector, Vector) (isz = 185) (sz = 194)
+    -> EXTERN: (103,17) ?1memset
+    -> INLINE (MANUAL): (109,9) force(double, double, double, double, double, double, double, double, double, double *) (isz = 62) (sz = 85)
+      -> INLINE (MANUAL): steric.h:(63,8) dist_and_disp(double, double, double, double, double, double, double, double *, double *, double *) (isz = 21) (sz = 46)
+        -> EXTERN: (44,14) remainder(double, double)
+        -> EXTERN: (45,14) remainder(double, double)
+        -> EXTERN: (46,14) remainder(double, double)
+      -> INLINE (MANUAL): steric.h:(72,5) force_in_range(double, double, double, double, double, double, double *) (isz = 10) (sz = 27)
+
+
+    Report from: OpenMP optimizations [openmp]
+
+accelerate.c(85:7-85:7):OMP:accelerate:  OpenMP multithreaded code generation for ATOMIC was successful
+accelerate.c(87:7-87:7):OMP:accelerate:  OpenMP multithreaded code generation for ATOMIC was successful
+accelerate.c(74:3-74:3):OMP:accelerate:  OpenMP DEFINED LOOP WAS PARALLELIZED
+accelerate.c(101:3-101:3):OMP:accelerate:  OpenMP DEFINED LOOP WAS PARALLELIZED
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at accelerate.c(67,5) inlined into accelerate.c(128,5)
+   remark #25444: Loopnest Interchanged: ( 1 2 ) --> ( 2 1 )
+   remark #15542: loop was not vectorized: inner loop was already vectorized   [ accelerate.c(67,5) ]
+
+   LOOP BEGIN at accelerate.c(66,3) inlined into accelerate.c(128,5)
+      remark #25408: memset generated
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at accelerate.c(66,3) inlined into accelerate.c(128,5)
+         remark #15389: vectorization support: reference U has unaligned access   [ accelerate.c(68,7) ]
+         remark #15381: vectorization support: unaligned access used inside loop body
+         remark #15305: vectorization support: vector length 4
+         remark #15399: vectorization support: unroll factor set to 2
+         remark #15309: vectorization support: normalized vectorization overhead 0.300
+         remark #15301: PERMUTED LOOP WAS VECTORIZED
+         remark #15451: unmasked unaligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 6 
+         remark #15477: vector loop cost: 1.250 
+         remark #15478: estimated potential speedup: 1.940 
+         remark #15488: --- end vector loop cost summary ---
+         remark #25015: Estimate of max trip count of loop=1
+      LOOP END
+
+      LOOP BEGIN at accelerate.c(66,3) inlined into accelerate.c(128,5)
+      <Remainder loop for vectorization>
+         remark #15389: vectorization support: reference U has unaligned access   [ accelerate.c(68,7) ]
+         remark #15381: vectorization support: unaligned access used inside loop body
+         remark #15305: vectorization support: vector length 2
+         remark #15309: vectorization support: normalized vectorization overhead 2.167
+         remark #15301: REMAINDER LOOP WAS VECTORIZED
+         remark #25015: Estimate of max trip count of loop=6
+      LOOP END
+
+      LOOP BEGIN at accelerate.c(66,3) inlined into accelerate.c(128,5)
+      <Remainder loop for vectorization>
+         remark #25015: Estimate of max trip count of loop=12
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at accelerate.c(102,3) inlined into accelerate.c(131,5)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at accelerate.c(105,5) inlined into accelerate.c(131,5)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at accelerate.c(111,9) inlined into accelerate.c(131,5)
+         remark #15388: vectorization support: reference u has aligned access   [ accelerate.c(112,11) ]
+         remark #15388: vectorization support: reference u has aligned access   [ accelerate.c(112,11) ]
+         remark #15388: vectorization support: reference du has aligned access   [ accelerate.c(112,11) ]
+         remark #15305: vectorization support: vector length 2
+         remark #15300: LOOP WAS VECTORIZED
+         remark #15448: unmasked aligned unit stride loads: 2 
+         remark #15449: unmasked aligned unit stride stores: 1 
+         remark #15475: --- begin vector loop cost summary ---
+         remark #15476: scalar loop cost: 6 
+         remark #15477: vector loop cost: 2.500 
+         remark #15478: estimated potential speedup: 1.630 
+         remark #15488: --- end vector loop cost summary ---
+         remark #25015: Estimate of max trip count of loop=1
+      LOOP END
+
+      LOOP BEGIN at accelerate.c(111,9) inlined into accelerate.c(131,5)
+      <Remainder loop for vectorization>
+         remark #25436: completely unrolled by 1  
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at accelerate.c(116,5) inlined into accelerate.c(131,5)
+      remark #15389: vectorization support: reference U has unaligned access   [ accelerate.c(119,7) ]
+      remark #15388: vectorization support: reference u has aligned access   [ accelerate.c(119,7) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15335: loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+      remark #15305: vectorization support: vector length 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.333
+      remark #15448: unmasked aligned unit stride loads: 1 
+      remark #15450: unmasked unaligned unit stride loads: 1 
+      remark #15459: masked indexed (or scatter) stores: 1 
+      remark #15475: --- begin vector loop cost summary ---
+      remark #15476: scalar loop cost: 7 
+      remark #15477: vector loop cost: 6.000 
+      remark #15478: estimated potential speedup: 0.910 
+      remark #15488: --- end vector loop cost summary ---
+      remark #25436: completely unrolled by 3  
+   LOOP END
+LOOP END
+
+LOOP BEGIN at accelerate.c(75,3) inlined into accelerate.c(128,5)
+   remark #15382: vectorization support: call to function __kmpc_atomic_float8_add cannot be vectorized   [ accelerate.c(85,7) ]
+   remark #15382: vectorization support: call to function __kmpc_atomic_float8_sub cannot be vectorized   [ accelerate.c(87,7) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed ANTI dependence between i line 76 and call:__kmpc_atomic_float8_sub line 87
+   remark #15346: vector dependence: assumed FLOW dependence between  line 87 and i line 76
+
+   LOOP BEGIN at accelerate.c(82,5) inlined into accelerate.c(128,5)
+      remark #15382: vectorization support: call to function __kmpc_atomic_float8_add cannot be vectorized   [ accelerate.c(85,7) ]
+      remark #15382: vectorization support: call to function __kmpc_atomic_float8_sub cannot be vectorized   [ accelerate.c(87,7) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+    Report from: Code generation optimizations [cg]
+
+accelerate.c(68,7):remark #34014: optimization advice for memset: increase the destination's alignment to 16 (and use __assume_aligned) to speed up library implementation
+accelerate.c(68,7):remark #34026: call to memset implemented as a call to optimized library version
+accelerate.c(103,17):remark #34000: call to memset implemented inline with stores with proven (alignment, offset): (32, 0)
+===========================================================================

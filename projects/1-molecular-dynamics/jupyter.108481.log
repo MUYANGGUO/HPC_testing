@@ -1,0 +1,34 @@
+To connect to your notebook, run the following command on your laptop/workstation:
+
+ssh -t -L 9574:localhost:9574 zjiang333@coc-ice.pace.gatech.edu ssh -L 9574:localhost:9574 rich133-h35-17-l
+
+Do not close the terminal where that is running, and open the address below in your browser:
+
+[I 17:37:35.253 NotebookApp] Serving notebooks from local directory: /nv/coc-ice/zjiang333/cse6230-hw/projects/1-molecular-dynamics
+[I 17:37:35.253 NotebookApp] The Jupyter Notebook is running at:
+[I 17:37:35.253 NotebookApp] http://localhost:9574/?token=39e3e1e4527a1d777dfdf6ce5a04c90d4b11d71bf5315b7a
+[I 17:37:35.253 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 17:37:35.254 NotebookApp] 
+    
+    Copy/paste this URL into your browser when you connect for the first time,
+    to login with a token:
+        http://localhost:9574/?token=39e3e1e4527a1d777dfdf6ce5a04c90d4b11d71bf5315b7a
+[I 17:40:17.974 NotebookApp] 302 GET /?token=39e3e1e4527a1d777dfdf6ce5a04c90d4b11d71bf5315b7a (127.0.0.1) 0.55ms
+[W 17:40:20.734 NotebookApp] 404 GET /nbextensions/widgets/notebook/js/extension.js?v=20191002173733 (127.0.0.1) 9.34ms referer=http://localhost:9574/notebooks/molecular-dynamics.ipynb
+[I 17:40:21.206 NotebookApp] Kernel started: 928b66f1-b55b-44b9-9f47-352a80ea2b2b
+[I 17:40:23.086 NotebookApp] Adapting to protocol v5.1 for kernel 928b66f1-b55b-44b9-9f47-352a80ea2b2b
+[I 18:16:35.007 NotebookApp] Saving file at /steric.h
+[I 18:17:02.696 NotebookApp] Saving file at /interactions.c
+[I 18:18:19.214 NotebookApp] Saving file at /interactions.c
+[I 18:18:53.720 NotebookApp] Saving file at /interactions.c
+[I 18:19:01.872 NotebookApp] Saving file at /interactions.c
+[I 18:19:33.974 NotebookApp] Saving file at /interactions.c
+[I 18:19:58.753 NotebookApp] Saving file at /interactions.c
+[I 18:21:20.336 NotebookApp] Saving file at /interactions.c
+[I 19:16:03.811 NotebookApp] Saving file at /molecular-dynamics.ipynb
+[I 19:33:16.035 NotebookApp] Saving file at /steric.h
+[I 19:34:32.518 NotebookApp] Saving file at /steric.h
+[I 19:34:44.719 NotebookApp] Saving file at /steric.h
+[I 19:34:52.681 NotebookApp] Saving file at /steric.h
+[C 19:37:47.531 NotebookApp] received signal 15, stopping
+[I 19:37:47.533 NotebookApp] Shutting down 1 kernel

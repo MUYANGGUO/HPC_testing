@@ -1,0 +1,63 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+    Report from: Interprocedural optimizations [ipo]
+
+  WHOLE PROGRAM (SAFE) [EITHER METHOD]: false
+  WHOLE PROGRAM (SEEN) [TABLE METHOD]: false
+  WHOLE PROGRAM (READ) [OBJECT READER METHOD]: false
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 30
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+In the inlining report below:
+   "sz" refers to the "size" of the routine. The smaller a routine's size,
+      the more likely it is to be inlined.
+   "isz" refers to the "inlined size" of the routine. This is the amount
+      the calling routine will grow if the called routine is inlined into it.
+      The compiler generally limits the amount a routine can grow by having
+      routines inlined into it.
+
+Begin optimization report for: VectorCreate(int, Vector *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VectorCreate(int, Vector *)) [1/2=50.0%] vector.c(7,1)
+  -> EXTERN: (11,9) safe_malloc(size_t, void *, const char *, const char *, int)
+  -> EXTERN: (21,11) safe_malloc(size_t, void *, const char *, const char *, int)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at vector.c(20,3)
+   remark #15520: loop was not vectorized: loop with multiple exits cannot be vectorized unless it meets search loop idiom criteria
+LOOP END
+===========================================================================
+
+Begin optimization report for: VectorDestroy(Vector *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (VectorDestroy(Vector *)) [2/2=100.0%] vector.c(30,1)
+  -> EXTERN: (35,5) free(void *)
+  -> EXTERN: (38,3) free(void *)
+
+
+    Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
+
+
+LOOP BEGIN at vector.c(34,3)
+   remark #15382: vectorization support: call to function free(void *) cannot be vectorized   [ vector.c(35,5) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed FLOW dependence between call:free(void *) line 35 and vec line 35
+   remark #15346: vector dependence: assumed ANTI dependence between vec line 35 and call:free(void *) line 35
+   remark #25436: completely unrolled by 3  
+LOOP END
+===========================================================================
