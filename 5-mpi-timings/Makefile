@@ -21,8 +21,8 @@ benchmarks: benchmarks.o
 	$(MPICC) -o $@ $^ $(LIBS)
 
 runbenchmarks: benchmarks
-	$(MPIRUNCMD) $(NODEFILEFLAG) -n $(N) ./benchmarks 
-# $(MPIRUNCMD) $(NODEFILEFLAG) -n $(N) ./benchmarks | xvfb-run python figgen.py
+	$(MPIRUNCMD) $(NODEFILEFLAG) -n $(N) ./benchmarks > benchmarks.txt
+#xvfb-run python figgen.py benchmarks.txt
 
 clean:
 	$(RM) *.o benchmarks

@@ -65,5 +65,5 @@ for line in lines:
     print(line)
     ax.plot(line[1],line[2],label=line[0])
 
-ax.legend()
+ax.legend(loc='lower right')
 plt.savefig('benchmarks.png')

@@ -221,7 +221,12 @@ int main(int argc, char **argv)
         if (rank < numComm) {
           
           MPI_Bcast(buffer, numBytes, MPI_BYTE, 0, subComm); MPI_CHK(err);
-//           MPI_Bcast(buffer, numBytes, MPI_BYTE, rank, subComm); MPI_CHK(err);
+          if (rank==0){
+            MPI_Reduce(MPI_IN_PLACE, buffer, 1, MPI_BYTE, MPI_BXOR, 0,subComm);
+          }
+          else{
+            MPI_Reduce(buffer, buffer, 1, MPI_BYTE, MPI_BXOR, 0,subComm);
+          }
           
         }
       }
