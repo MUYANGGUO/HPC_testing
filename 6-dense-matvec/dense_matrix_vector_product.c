@@ -147,7 +147,9 @@ int main (int argc, char **argv)
   /* As with the vectors, the entries of the matrix are uniquely determined by
    * their indices, so we can compute them from knowing the bounds of the
    * local subset of the matrix */
+  //debug: invalid starts and ends
   err = MatrixGetEntries(args, mStart, mEnd, nStart, nEnd, matrixEntries); MPI_CHK(err);
+  //printf("%d, pass3", rank);
 
   {
     double matNorm;

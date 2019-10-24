@@ -53,18 +53,18 @@ int DMVCommGetRankCoordinates2D(MPI_Comm comm, int *num_rows_p, int *row_p, int 
 {
   int num_cols, num_rows, col, row;
   int size, rank, err;
-  int dims[2]= {-1, -1};
+  int dims[2]= {0, 0};
   
-  //err = MPI_Comm_size(comm, &size); MPI_CHK(err);
+  err = MPI_Comm_size(comm, &size); MPI_CHK(err);
   err = MPI_Comm_rank(comm, &rank); MPI_CHK(err);
     
   num_cols = num_rows = col = row = -1;
   /* TODO: HINT, lookup MPI_Dims_create() */
-  MPI_Dims_create(1 , 2, dims)
+  MPI_Dims_create(size , 2, dims);
   num_cols = dims[1];
   num_rows = dims[0];
-  col = rank/num_cols;
-  row = rank%num_cols;
+  col = rank/num_rows;
+  row = rank%num_rows;
   
   *num_cols_p = num_cols;
   *num_rows_p = num_rows;
@@ -82,7 +82,7 @@ int MatrixGetLocalRange2d(Args args, const int *lOffsets, const int *rOffsets, i
   int      mStart, mEnd, nStart, nEnd;
   int      size, rank;
   int      err;
-  int num_cols, num_rows, col, row, mBlock, nBlock;
+  int num_cols, num_rows, col, row;
 
   /* initialize to bogus values */
   mStart = mEnd = nStart = nEnd = -1;
@@ -95,14 +95,16 @@ int MatrixGetLocalRange2d(Args args, const int *lOffsets, const int *rOffsets, i
    * The block column j should contain the same columns as are in the right
    * vector for ranks (j * mBlock, j * mBlock + 1, ..., (j + 1) * mBlock - 1).
    */
-  // ??? what are these offsets? 
-  DMVCommGetRankCoordinates2D(comm, &num_rows, &row, &num_cols, &cols);
-  mBlock = lOffsets[size] / num_cols;
-  nBlock = rOffsets[size] / num_rows;
-  mStart = mBlock * col;
-  mEnd = mBlock * (col+1) - 1;
-  nStart = nBlock * row;
-  nEnd = nBlock * (row+1) - 1;
+
+  DMVCommGetRankCoordinates2D(comm, &num_rows, &row, &num_cols, &col);
+  
+  nStart = lOffsets[row*num_cols];
+  nEnd = lOffsets[(row+1)*num_cols];
+  mStart = rOffsets[col*num_rows]; 
+  mEnd = rOffsets[(col+1)*num_rows];
+  //if(rank==0) printf("num_row:%d, num_col:%d\n", num_rows, num_cols);
+  //printf("%d; m: %d:%d, n:%d:%d\n", rank, mStart, mEnd, nStart, nEnd); //debug
+
   *mStart_p = mStart;
   *mEnd_p   = mEnd;
   *nStart_p = nStart;
@@ -164,6 +166,7 @@ int VecGetEntries(Args args, int colStart, int colEnd, double *entries)
 
   return 0;
 }
+
 
 
 
