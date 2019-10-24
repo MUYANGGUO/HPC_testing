@@ -32,7 +32,7 @@ int DenseMatVec_2dPartition(Args args, int mStart, int mEnd, int nStart, int nEn
   //printf("%d; m(col): %d:%d, n(row):%d:%d, row:%d, col:%d\n", rank, mStart, mEnd, nStart, nEnd, row, col); //debug
   err = MPI_Comm_split(comm, row, rank, &rowComm); MPI_CHK(err);
   err = MPI_Comm_split(comm, col, rank, &colComm); MPI_CHK(err);
-  vecRight = (double *) malloc(mGlobal * sizeof(*vecRight));
+  vecRight = (double *) malloc(nGlobal * sizeof(*vecRight));
   nLocals = (int *) malloc(num_rows * sizeof(*nOffsets));
   err = MPI_Allgather(&rLocal, 1, MPI_INT, nLocals, 1, MPI_INT, colComm); MPI_CHK(err);
   nOffsets = (int *) malloc((num_rows + 1) * sizeof(*nOffsets));
@@ -44,11 +44,11 @@ int DenseMatVec_2dPartition(Args args, int mStart, int mEnd, int nStart, int nEn
   err = MPI_Allgatherv(vecRightLocal, rLocal, MPI_DOUBLE, vecRight, nLocals, nOffsets, MPI_DOUBLE, colComm); MPI_CHK(err);
   // actual MVP
   double *vecLeft;
-  vecLeft = (double *)malloc((nGlobal) * sizeof(double));
-  for (int q = 0; q < nGlobal; q++) { //row
+  vecLeft = (double *)malloc((mGlobal) * sizeof(double));
+  for (int q = 0; q < mGlobal; q++) { //row
     vecLeft[q] = 0;
-    for (int i = 0; i < mGlobal; i++) { //column
-      vecLeft[q] += vecRight[i] *  matrixEntries[q*mGlobal + i];
+    for (int i = 0; i < nGlobal; i++) { //column
+      vecLeft[q] += vecRight[i] *  matrixEntries[q*nGlobal + i];
     }
   }
   free(vecRight);

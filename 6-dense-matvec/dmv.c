@@ -75,7 +75,7 @@ int DMVCommGetRankCoordinates2D(MPI_Comm comm, int *num_rows_p, int *row_p, int 
 
 /* Given arguments (which include a communicator, args->comm),
  * offsets for each rank in the left and right vectors compatible with a matrix (lOffsets and rOffsets),
- * compute which entries in the matrix this MPI rank will own, given by the column ranges [mStart, mEnd) and row ranges [nStart, nEnd) */
+ * compute which entries in the matrix this MPI rank will own, given by the row ranges [mStart, mEnd) and column ranges [nStart, nEnd) */
 int MatrixGetLocalRange2d(Args args, const int *lOffsets, const int *rOffsets, int *mStart_p, int *mEnd_p, int *nStart_p, int *nEnd_p)
 {
   MPI_Comm comm = args->comm;
@@ -98,10 +98,10 @@ int MatrixGetLocalRange2d(Args args, const int *lOffsets, const int *rOffsets, i
 
   DMVCommGetRankCoordinates2D(comm, &num_rows, &row, &num_cols, &col);
   
-  nStart = lOffsets[row*num_cols];
-  nEnd = lOffsets[(row+1)*num_cols];
-  mStart = rOffsets[col*num_rows]; 
-  mEnd = rOffsets[(col+1)*num_rows];
+  mStart = lOffsets[row*num_cols];
+  mEnd = lOffsets[(row+1)*num_cols];
+  nStart = rOffsets[col*num_rows]; 
+  nEnd = rOffsets[(col+1)*num_rows];
   //if(rank==0) printf("num_row:%d, num_col:%d\n", num_rows, num_cols);
   //printf("%d; m: %d:%d, n:%d:%d\n", rank, mStart, mEnd, nStart, nEnd); //debug
 
