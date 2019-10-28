@@ -273,7 +273,8 @@ IXGetPairs(IX ix, Vector X, double r, int *Npairs, ix_pair **pairs)
                                  &dx, &dy, &dz);
 
               if (d2 < cutoff2)
-              {
+              { 
+                #pragma omp critical
                 IXPushPair(ix,p1,p2);
               }
 

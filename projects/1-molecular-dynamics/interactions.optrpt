@@ -174,16 +174,17 @@ INLINE REPORT: (IXGetPairs(IX, Vector, double, int *, ix_pair **)) [8/9=88.9%] i
     -> EXTERN: steric.h:(44,14) remainder(double, double)
     -> EXTERN: steric.h:(45,14) remainder(double, double)
     -> EXTERN: steric.h:(46,14) remainder(double, double)
-  -> INLINE: (277,17) IXPushPair(IX, int, int) (isz = 47) (sz = 56)
+  -> INLINE: (278,17) IXPushPair(IX, int, int) (isz = 47) (sz = 56)
     -> EXTERN: (106,5) safe_malloc(size_t, void *, const char *, const char *, int)
     -> EXTERN: (107,5) memcpy(void *__restrict__, const void *__restrict__, size_t)
     -> EXTERN: (108,5) free(void *)
-  -> EXTERN: (289,3) free(void *)
+  -> EXTERN: (290,3) free(void *)
 
 
     Report from: OpenMP optimizations [openmp]
 
 interactions.c(246:15-246:15):OMP:IXGetPairs:  OpenMP multithreaded code generation for CRITICAL was successful
+interactions.c(277:17-277:17):OMP:IXGetPairs:  OpenMP multithreaded code generation for CRITICAL was successful
 interactions.c(224:3-224:3):OMP:IXGetPairs:  OpenMP DEFINED LOOP WAS PARALLELIZED
 
     Report from: Loop nest, Vector & Auto-parallelization optimizations [loop, vec, par]
@@ -243,12 +244,14 @@ LOOP BEGIN at interactions.c(225,3)
    LOOP END
 
    LOOP BEGIN at interactions.c(257,9)
+      remark #15382: vectorization support: call to function __kmpc_critical cannot be vectorized   [ interactions.c(278,17) ]
       remark #15382: vectorization support: call to function safe_malloc(size_t, void *, const char *, const char *, int) cannot be vectorized   [ interactions.c(106,5) ]
       remark #15382: vectorization support: call to function memcpy(void *__restrict__, const void *__restrict__, size_t) cannot be vectorized   [ interactions.c(107,5) ]
       remark #15382: vectorization support: call to function free(void *) cannot be vectorized   [ interactions.c(108,5) ]
+      remark #15382: vectorization support: call to function __kmpc_end_critical cannot be vectorized   [ interactions.c(278,17) ]
       remark #15344: loop was not vectorized: vector dependence prevents vectorization
-      remark #15346: vector dependence: assumed ANTI dependence between box_neighbors line 265 and pair line 114
-      remark #15346: vector dependence: assumed FLOW dependence between pair line 114 and box_neighbors line 265
+      remark #15346: vector dependence: assumed ANTI dependence between b line 265 and call:__kmpc_end_critical line 278
+      remark #15346: vector dependence: assumed FLOW dependence between  line 278 and b line 265
 
       LOOP BEGIN at interactions.c(266,11)
          remark #15521: loop was not vectorized: loop control variable was not identified. Explicitly compute the iteration count before executing the loop or try using canonical loop form
@@ -274,6 +277,6 @@ Begin optimization report for: IXRestorePairs(IX, Vector, double, int *, ix_pair
 
     Report from: Interprocedural optimizations [ipo]
 
-INLINE REPORT: (IXRestorePairs(IX, Vector, double, int *, ix_pair **)) [9/9=100.0%] interactions.c(313,1)
+INLINE REPORT: (IXRestorePairs(IX, Vector, double, int *, ix_pair **)) [9/9=100.0%] interactions.c(314,1)
 
 ===========================================================================
