@@ -60,6 +60,9 @@ int Proj2SorterSort(Proj2Sorter sorter, size_t numKeysLocal, int uniform, uint64
  */
 int Proj2SorterSortLocal(Proj2Sorter sorter, size_t numKeysLocal, uint64_t *keys, int direction);
 
+int Proj2SorterSortLocal_merge(Proj2Sorter sorter, size_t numKeysIn, uint64_t *keysIn, size_t numKeysIn2, uint64_t *keysOut,
+                                  int direction, int depth);
+
 /* Defined in bitonic.c */
 /* A parallel sort that works for power of 2 processes.
  * \param[in] sorter       The sorting context.

@@ -205,7 +205,9 @@ int main(int argc, char **argv)
   /* seed the random number generator */
   ukey.v[0] = seed;
   tfkey = threefry4x64keyinit(ukey);
+  // PROJ2LOG(MPI_COMM_WORLD, "create sorter ...");
   err = Proj2SorterCreate(MPI_COMM_WORLD, &sorter); PROJ2CHK(err);
+  // PROJ2LOG(MPI_COMM_WORLD, "create sorter success!");
   err = MPI_Comm_rank(MPI_COMM_WORLD, &rank); PROJ2CHK(err);
   for (size_t numKeysLocal = minKeys; numKeysLocal <= maxKeys; numKeysLocal *= mult, numTests++) {
 
