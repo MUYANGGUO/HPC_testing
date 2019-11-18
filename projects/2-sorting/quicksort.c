@@ -29,7 +29,7 @@ static int uint64_compare_pair(const void *key, const void *array)
   return 1;
 }
 
-static int Proj2SorterSort_quicksort_recursive(Proj2Sorter sorter, MPI_Comm comm, size_t numKeysLocal, uint64_t *keys)
+static int Proj2SorterSort_quicksort_recursive(Proj2Sorter sorter, size_t numKeysLocal, uint64_t *keys, int cnt)
 {
   uint64_t pivot = 0;
   uint64_t *lower_half, *upper_half;
@@ -39,21 +39,14 @@ static int Proj2SorterSort_quicksort_recursive(Proj2Sorter sorter, MPI_Comm comm
   int      color;
   int      size, rank;
   int      equivRank;
-  MPI_Comm subcomm;
+  MPI_Comm comm;
   int      err;
-
+	
+  comm = sorter->subComms[cnt];
   err = MPI_Comm_size(comm, &size); PROJ2CHK(err);
   err = MPI_Comm_rank(comm, &rank); PROJ2CHK(err);
-  
-  //debug
-  double t1, t2;
-  t1 = MPI_Wtime();
-  
   /* sort locally up front */
   err = Proj2SorterSortLocal(sorter, numKeysLocal, keys, PROJ2SORT_FORWARD); PROJ2CHK(err);
-  t2 = MPI_Wtime();
-  printf("Rank: %d, commSize: %d, localSize: %d, Local Sorting time: %1.2f\n", rank, size, numKeysLocal, t2-t1);fflush(stdout);
-  
   if (size == 1) {
     /* base case: nothing to do */
     return 0;
@@ -146,9 +139,9 @@ static int Proj2SorterSort_quicksort_recursive(Proj2Sorter sorter, MPI_Comm comm
       err = MPI_Wait(&sendreq, MPI_STATUS_IGNORE); MPI_CHK(err);
     }
   }
-  err = MPI_Comm_split(comm, color, rank, &subcomm); PROJ2CHK(err);
-  err = Proj2SorterSort_quicksort_recursive(sorter, subcomm, numKeysLocalNew, keysNew); PROJ2CHK(err);
-  err = MPI_Comm_free(&subcomm); PROJ2CHK(err);
+  //err = MPI_Comm_split(comm, color, rank, &subcomm); PROJ2CHK(err);
+  err = Proj2SorterSort_quicksort_recursive(sorter, numKeysLocalNew, keysNew, cnt+1); PROJ2CHK(err);
+  // err = MPI_Comm_free(&subcomm); PROJ2CHK(err);
 
   /* Now the array is sorted, but we have to move it back to its original
    * distribution */
@@ -262,6 +255,7 @@ int Proj2SorterSort_quicksort(Proj2Sorter sorter, size_t numKeysLocal, int unifo
   int      err;
 
   /* initiate recursive call */
-  err = Proj2SorterSort_quicksort_recursive(sorter, sorter->comm, numKeysLocal, keys); PROJ2CHK(err);
+  err = Proj2SorterSort_quicksort_recursive(sorter, numKeysLocal, keys, 0); PROJ2CHK(err);
+  
   return 0;
 }

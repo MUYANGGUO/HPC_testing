@@ -1,5 +1,6 @@
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include "proj2sorter.h"
 #include "proj2sorter_impl.h"
 
@@ -9,7 +10,7 @@ int Proj2SorterCreate(MPI_Comm comm, Proj2Sorter *sorter_p)
   int err;
   // create subcomm when creating sorter
   int rank, size, group, cnt=0, numComms=1;
-  MPI_Comm tempComm, tempSubComm; 
+  MPI_Comm tempComm=comm, tempSubComm; 
   
   err = PROJ2MALLOC(1,&sorter); PROJ2CHK(err);
   memset(sorter, 0, sizeof(*sorter));
@@ -20,7 +21,7 @@ int Proj2SorterCreate(MPI_Comm comm, Proj2Sorter *sorter_p)
   //calculate # of required comms 
   while(size>1)
   {
-    numComm++;
+    numComms++;
     size = size/2; 
   }
   //create subComm
@@ -32,9 +33,9 @@ int Proj2SorterCreate(MPI_Comm comm, Proj2Sorter *sorter_p)
   {
     sorter->subComms[cnt]=tempComm;
     cnt++; 
-    if size<=1
+    if (size<=1)
       break;
-    else:
+    else
     {
       err = MPI_Comm_rank(tempComm, &rank); MPI_CHK(err);
       group = (rank >= (size / 2));
@@ -45,6 +46,7 @@ int Proj2SorterCreate(MPI_Comm comm, Proj2Sorter *sorter_p)
   }
 
   *sorter_p = sorter;
+  
   return 0;
 }
 
@@ -62,9 +64,10 @@ int Proj2SorterDestroy(Proj2Sorter *sorter_p)
     err = PROJ2FREE(&next); PROJ2CHK(err);
     next = nnext;
   }
-  err = PROJ2FREE(sorter_p); PROJ2CHK(err);
   //free sub
-  PROJ2FREE(sorter->subComms);
+  free(sorter->subComms);
+  err = PROJ2FREE(sorter_p); PROJ2CHK(err);
+  
 
   return 0;
 }
