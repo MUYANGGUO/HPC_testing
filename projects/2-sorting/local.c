@@ -5,6 +5,36 @@
 #define SORT_TYPE uint64_t
 #include "swensonsort/sort.h"
 
+int Proj2SorterSortLocal_merge(Proj2Sorter sorter, size_t numKeysIn, uint64_t *keysIn, 
+                               size_t numKeysIn2, uint64_t *keysOut, int direction, int depth)
+{
+  int cnt, left = 0, right = 0;
+  for(cnt=0; cnt < numKeysIn + numKeysIn2; cnt++)
+  {
+    if (left == numKeysIn)
+    {
+      keysOut[cnt] = keysOut[right + numKeysIn];
+      right++;
+    }
+    else if (right == numKeysIn2)
+    {
+      keysOut[cnt] = keysIn[left];
+      left++;
+    }
+    else if ( ! ((keysIn[left] > keysOut[right + numKeysIn]) ^ direction ))//XNOR
+    {
+      keysOut[cnt] = keysIn[left];
+      left++;
+    }
+    else
+    {
+      keysOut[cnt] = keysOut[right + numKeysIn];
+      right++;
+    }
+  }
+
+  return 0;
+}
 
 int Proj2SorterSortLocal_swenson_quick_sort(Proj2Sorter sorter, size_t numKeysLocal, uint64_t *keys, int direction)
 {
