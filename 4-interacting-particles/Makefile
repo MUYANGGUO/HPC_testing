@@ -1,16 +1,17 @@
 
-MAKERULES=intel
+MAKERULES=gcc
 include Makefile.$(MAKERULES)
 CPPFLAGS = -I../utils -I../utils/tictoc
-CC = icc
-OMPFLAGS = -qopenmp
+#CC = gcc
+NVCC = nvcc
+OMPFLAGS = -openmp
 DEFINES =
 RM = rm -f
 LIBS = -lm -lrt
 LINKER = $(CC) $(OMPFLAGS)
 CFLAGS = -g -O3 -Wall
 
-all: cloud cloud2
+all: cloud cloud2 cloudgpu
 
 %.o: %.c
 	$(CC) -std=c99 $(CFLAGS) $(COPTFLAGS) $(CPPFLAGS) $(DEFINES) $(OMPFLAGS) -c -o $@ $<
@@ -29,6 +30,8 @@ verlet_accelerate.o: verlet_accelerate.c verlet.h cloud.h
 
 verlet_accelerate2.o: verlet_accelerate2.c verlet.h cloud.h
 
+verlet_accelerate_gpu.o: verlet_accelerate_gpu.c verlet.h cloud.h
+
 cloud.o: cloud.c verlet.h cloud.h
 
 cloud: verlet.o verlet_stream_and_noise.o verlet_accelerate.o cloud.o initialize.o hamiltonian.o
@@ -36,8 +39,11 @@ cloud: verlet.o verlet_stream_and_noise.o verlet_accelerate.o cloud.o initialize
 
 cloud2: verlet.o verlet_stream_and_noise.o verlet_accelerate2.o cloud.o initialize.o hamiltonian.o
 	$(LINKER) -o $@ $^ $(LIBS)
+    
+cloudgpu: verlet.o verlet_stream_and_noise.o verlet_accelerate_gpu.o cloud.o initialize.o hamiltonian.o
+	$(LINKER) -o $@ $^ $(LIBS)
 
-PERF =
+PERF = 
 STREAM_N = 1000000
 
 NP=64
@@ -63,7 +69,12 @@ vizcloud:
 	$(MAKE) --silent cloud
 	./cloud $(NP) $(NT) $(DT) $(K) $(D) $(CHUNK) $(VIZNAME) | xvfb-run python3 cloud.py
 
-clean:
-	$(RM) *.o cloud cloud2
+runcloudgpu:
+	$(MAKE) --silent clean
+	$(MAKE) --silent cloudgpu
+	$(PERF) ./cloudgpu $(NP) $(NT) $(DT) $(K) $(D)
 
-.PHONY: clean runcloud runcloud2 vizcloud
+clean:
+	$(RM) *.o cloud cloud2 cloudgpu
+
+.PHONY: clean runcloud runcloud2 runcloudgpu vizcloud
