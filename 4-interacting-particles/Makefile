@@ -1,15 +1,13 @@
 
-MAKERULES=gcc
+MAKERULES=intel
 include Makefile.$(MAKERULES)
 CPPFLAGS = -I../utils -I../utils/tictoc
-#CC = gcc
-NVCC = nvcc
-OMPFLAGS = -openmp
 DEFINES =
 RM = rm -f
 LIBS = -lm -lrt
-LINKER = $(CC) $(OMPFLAGS)
-CFLAGS = -g -O3 -Wall
+LINKER = $(CC)
+LINKER = icpc $(OMPFLAGS)
+OMPFLAGS = -qopenmp
 
 all: cloud cloud2 cloudgpu
 
