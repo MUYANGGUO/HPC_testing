@@ -12,7 +12,7 @@ verlet_step_stream_and_noise (int Np, double dt_stream, double dt_noise,
 
     tag = cse6230rand_get_tag (rand);
       
-#pragma omp parallel for
+	#pragma omp parallel for
     for (int i = 0; i < Np; i++) {
       double rval[4];
 
@@ -27,9 +27,10 @@ verlet_step_stream_and_noise (int Np, double dt_stream, double dt_noise,
     }
   }
   else {
-#pragma omp parallel for      
+	#pragma omp parallel for      
     for (int i = 0; i < Np; i++) {
       for (int d = 0; d < 3; d++) {
+        #pragma omp critical
         X[d][i] += dt_stream * U[d][i];
       }
     }
