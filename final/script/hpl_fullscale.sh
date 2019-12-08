@@ -6,7 +6,8 @@
 #PBS -q coc-ice-multi
 
 module load cse6230/gcc-omp-gpu
-cd /nv/coc-ice/zjiang333/cse6230-hw/final/hpl/hpl-2.3/bin/Linux/
+#cd /nv/coc-ice/zjiang333/cse6230-hw/final/hpl/hpl-2.3/bin/Linux/
+cd "$HOME"/cse6230-hw/final/hpl/hpl-2.3/bin/Linux/
 ### run example with 112 cores
 cp HPL_fullscale.dat HPL.dat
-mpirun -np 112 ./xhpl
+mpirun -np 112 ./xhpl | tee "$HOME"/cse6230-hw/final/fullscale.txt

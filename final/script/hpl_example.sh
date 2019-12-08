@@ -6,7 +6,7 @@
 #PBS -q coc-ice
 
 module load cse6230/gcc-omp-gpu
-cd /nv/coc-ice/zjiang333/cse6230-hw/final/hpl/hpl-2.3/bin/Linux/
+cd "$HOME"/cse6230-hw/final/hpl/hpl-2.3/bin/Linux/
 ### run example with 8 cores
 cp HPL_example.dat HPL.dat
 mpirun -np 8 ./xhpl
